@@ -1,0 +1,78 @@
+{
+    "resource_version": 2,
+    "metadata": {
+      "version": 3,
+      "sources": [
+        {
+          "name": "default",
+          "kind": "postgres",
+          "tables": [],
+          "configuration": {
+            "connection_info": {
+              "use_prepared_statements": true,
+              "database_url": {
+                "from_env": "HASURA_GRAPHQL_DATABASE_URL"
+              },
+              "isolation_level": "read-committed",
+              "pool_settings": {
+                "connection_lifetime": 600,
+                "retries": 1,
+                "idle_timeout": 180,
+                "max_connections": 50
+              }
+            }
+          }
+        }
+      ],
+      "actions": [
+        {
+          "name": "login",
+          "definition": {
+            "handler": "http://host.docker.internal:8000/login",
+            "output_type": "AuthToken!",
+            "arguments": [
+              {
+                "name": "params",
+                "type": "AuthInput!"
+              }
+            ],
+            "request_transform": {
+              "body": "{\n  \"email\": {{$body.input.params.email}},\n  \"password\": {{$body.input.params.password}}\n}",
+              "content_type": "application/json",
+              "template_engine": "Kriti"
+            },
+            "type": "mutation",
+            "kind": "synchronous"
+          }
+        }
+      ],
+      "custom_types": {
+        "input_objects": [
+          {
+            "name": "AuthInput",
+            "fields": [
+              {
+                "name": "email",
+                "type": "String!"
+              },
+              {
+                "name": "password",
+                "type": "String!"
+              }
+            ]
+          }
+        ],
+        "objects": [
+          {
+            "name": "AuthToken",
+            "fields": [
+              {
+                "name": "token",
+                "type": "String!"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
