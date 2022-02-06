@@ -1,5 +1,9 @@
 # Hasura OpenAPI -> Action Generator via Action Transforms
 
+- [Hasura OpenAPI -> Action Generator via Action Transforms](#hasura-openapi---action-generator-via-action-transforms)
+  - [Introduction](#introduction)
+  - [Example](#example)
+  - [Limitations](#limitations)
 
 ## Introduction
 
